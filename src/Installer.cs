@@ -16,7 +16,7 @@ namespace WaktuShalat
 {
     static class Setup
     {
-        public const string Version = "2.0.0";
+        public const string Version = "2.1.0";
         const string UninstallKey = @"Software\Microsoft\Windows\CurrentVersion\Uninstall\WaktuShalat";
         public static readonly string Dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Programs", "WaktuShalat");
         public static string AppExe { get { return Path.Combine(Dir, "WaktuShalat.exe"); } }
@@ -143,7 +143,7 @@ namespace WaktuShalat
             primary = new Border
             {
                 Height = 44, Width = 220, CornerRadius = new CornerRadius(22), Margin = new Thickness(0, 30, 0, 0),
-                Background = uninstall ? Ui.B("#FF453A") : Brushes.White, Child = primaryText
+                Background = uninstall ? Ui.B("#FF453A") : Ui.Accent, Child = primaryText
             };
             if (uninstall) primaryText.Foreground = Brushes.White;
             primaryAction = uninstall ? (Action)DoUninstall : DoInstall;
@@ -208,7 +208,7 @@ namespace WaktuShalat
             await Task.Run(() => Setup.Uninstall());
             title.Text = "Sudah dihapus";
             subtitle.Text = "Waktu Shalat telah dihapus dari komputer ini.";
-            primary.Background = Brushes.White;
+            primary.Background = Ui.Accent;
             primaryText.Foreground = Brushes.Black;
             primaryText.Text = "Selesai";
             primaryAction = Close;

@@ -109,6 +109,22 @@ namespace WaktuShalat
             return n;
         }
 
+        public static int IqamahMinutes(string key) { return key == "Maghrib" ? 10 : 15; }
+
+        // The prayer whose iqamah hasn't happened yet (adhan <= now < adhan + 15 min, Maghrib 10), or null.
+        public static NextPrayer Iqamah(DateTime now)
+        {
+            if (Today == null || Today.Date != now.Date) return null;
+            foreach (var k in Api.Prayers)
+            {
+                var t = Today.Times[k];
+                var at = t.AddMinutes(IqamahMinutes(k));
+                if (now >= t && now < at)
+                    return new NextPrayer { Key = k, At = at, Prev = t, Left = at - now, Progress = (now - t).TotalSeconds / (at - t).TotalSeconds };
+            }
+            return null;
+        }
+
         static int Secs(TimeSpan t) { return Math.Max(0, (int)Math.Ceiling(t.TotalSeconds)); }
 
         public static string Hms(TimeSpan t)
@@ -131,9 +147,9 @@ namespace WaktuShalat
 
             var ev = Pomo.Update();
             if (ev == "focusDone")
-                Alert("", Ui.Orange, "Sesi fokus selesai!", "Istirahat " + (int)Pomo.Total.TotalMinutes + " menit. Kamu keren.", 1);
+                Alert("", Ui.Accent, "Sesi fokus selesai!", "Istirahat " + (int)Pomo.Total.TotalMinutes + " menit. Kamu keren.", 1);
             else if (ev == "breakDone")
-                Alert("", Ui.GreenBrush, "Istirahat selesai", "Siap fokus lagi? Ketuk untuk mulai.", 1);
+                Alert("", Ui.Sky, "Istirahat selesai", "Siap fokus lagi? Ketuk untuk mulai.", 1);
 
             var n = Next(now);
             if (n != null)
@@ -155,10 +171,13 @@ namespace WaktuShalat
                     var t = day.Times[k];
                     string name = Api.Name(k), id = day.Date.ToString("yyyyMMdd") + k;
                     if (S.Notify && now >= t && now < t.AddMinutes(1) && fired.Add(id))
-                        Alert("", Brushes.White, "Waktu " + name + " telah tiba", name + " " + t.ToString("HH:mm") + "  ·  " + S.City, 0);
+                        Alert("", Ui.Accent, "Waktu " + name + " telah tiba", name + " " + t.ToString("HH:mm") + "  ·  " + S.City, 0);
+                    var iq = t.AddMinutes(IqamahMinutes(k));
+                    if (S.Iqamah && now >= iq && now < iq.AddMinutes(1) && fired.Add(id + "-iq"))
+                        Alert("", Ui.Accent, "Waktu iqamah " + name, "Segera rapatkan shaf  ·  " + iq.ToString("HH:mm"), 0);
                     var pre = t.AddMinutes(-10);
                     if (S.PreRemind && now >= pre && now < pre.AddMinutes(1) && fired.Add(id + "-pre"))
-                        Alert("", Brushes.White, "10 menit lagi " + name, "pukul " + t.ToString("HH:mm") + "  ·  " + S.City, 0);
+                        Alert("", Ui.Accent, "10 menit lagi " + name, "pukul " + t.ToString("HH:mm") + "  ·  " + S.City, 0);
                 }
             }
         }

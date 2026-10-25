@@ -35,10 +35,18 @@ namespace WaktuShalat
             TextOptions.SetTextRenderingMode(this, TextRenderingMode.Grayscale);
 
             var sp = new StackPanel();
+            var body = new Grid();
+            var star = Ui.Star8(120, Ui.Accent, 1.1);
+            star.Opacity = 0.08;
+            star.HorizontalAlignment = HorizontalAlignment.Right;
+            star.VerticalAlignment = VerticalAlignment.Top;
+            star.Margin = new Thickness(0, 18, -4, 0);
+            body.Children.Add(star);
+            body.Children.Add(sp);
             var frame = new Border
             {
                 Margin = new Thickness(14), CornerRadius = new CornerRadius(26), Background = Brushes.Black,
-                BorderBrush = Ui.B("#262628"), BorderThickness = new Thickness(1), Padding = new Thickness(24, 22, 24, 22), Child = sp,
+                BorderBrush = Ui.B("#262628"), BorderThickness = new Thickness(1), Padding = new Thickness(24, 22, 24, 22), Child = body,
                 Effect = new DropShadowEffect { BlurRadius = 24, ShadowDepth = 4, Opacity = 0.5 }
             };
             frame.MouseLeftButtonDown += (s, e) =>
@@ -88,7 +96,7 @@ namespace WaktuShalat
             pomo.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
             pomo.ColumnDefinitions.Add(new ColumnDefinition());
             pomo.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-            wRing = new Ring(34, 4, Ui.CardBg, Ui.Orange);
+            wRing = new Ring(34, 4, Ui.CardBg, Ui.Accent);
             pomo.Children.Add(wRing);
             var pt = new StackPanel { VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(14, 0, 10, 0) };
             wPomoTitle = Ui.T("Pomodoro", 14, Ui.Label, FontWeights.SemiBold);
@@ -99,7 +107,7 @@ namespace WaktuShalat
             pt.Children.Add(wPomoSub);
             Grid.SetColumn(pt, 1);
             pomo.Children.Add(pt);
-            var play = Ui.CircleButton(34, Brushes.White, "", 13, Brushes.Black, () => { Core.Pomo.Toggle(); Refresh(); }, out wPlay);
+            var play = Ui.CircleButton(34, Ui.Accent, "", 13, Brushes.Black, () => { Core.Pomo.Toggle(); Refresh(); }, out wPlay);
             Grid.SetColumn(play, 2);
             pomo.Children.Add(play);
             sp.Children.Add(pomo);
@@ -161,11 +169,11 @@ namespace WaktuShalat
                 var circle = new Ellipse { Width = 16, Height = 16, Stroke = Ui.Dim, StrokeThickness = 1.5, Fill = Brushes.Transparent, Margin = new Thickness(0, 0, 12, 0), VerticalAlignment = VerticalAlignment.Center };
                 var hit = new Grid { Background = Brushes.Transparent };
                 hit.Children.Add(circle);
-                Ui.Clickable(hit, () => { circle.Fill = Ui.GreenBrush; circle.Stroke = Ui.GreenBrush; Chime.Play(); Core.Todos.Toggle(item); }, null);
+                Ui.Clickable(hit, () => { circle.Fill = Ui.Accent; circle.Stroke = Ui.Accent; Chime.Play(); Core.Todos.Toggle(item); }, null);
                 row.Children.Add(hit);
                 if (item.Focus)
                 {
-                    var flag = Ui.Icon("", 11, Ui.Orange);
+                    var flag = Ui.Icon("", 11, Ui.Accent);
                     flag.Margin = new Thickness(0, 1, 6, 0);
                     row.Children.Add(flag);
                 }
@@ -189,22 +197,26 @@ namespace WaktuShalat
             wDate.Text = DateTime.Today.ToString("ddd, d MMM", Core.Id);
             if (n != null)
             {
-                wLabel.Text = "MENUJU " + Api.Name(n.Key).ToUpper() + (n.Tomorrow ? " BESOK" : "");
-                wCount.Text = Core.Hms(n.Left);
-                wAt.Text = "pukul " + n.At.ToString("HH:mm");
+                var iq = Core.Iqamah(now);
+                var target = iq ?? n;
+                wLabel.Text = iq != null ? "MENUJU IQAMAH " + Api.Name(iq.Key).ToUpper() : "MENUJU " + Api.Name(n.Key).ToUpper() + (n.Tomorrow ? " BESOK" : "");
+                wLabel.Foreground = iq != null ? Ui.Accent : Ui.Secondary;
+                wCount.Text = Core.Hms(target.Left);
+                wAt.Text = "pukul " + target.At.ToString("HH:mm");
+                string highlight = iq != null ? iq.Key : n.Tomorrow ? null : n.Key;
                 for (int i = 0; i < 5; i++)
                 {
                     var k = Api.Prayers[i];
-                    bool isNext = !n.Tomorrow && k == n.Key;
+                    bool isNext = k == highlight;
                     cellTime[i].Text = today.Times[k].ToString("HH:mm");
-                    cells[i].Background = isNext ? Brushes.White : Ui.CardBg;
-                    cellName[i].Foreground = isNext ? Brushes.Black : Ui.Secondary;
-                    cellTime[i].Foreground = isNext ? Brushes.Black : today.Times[k] <= now ? Ui.Dim : Ui.Label;
+                    cells[i].Background = isNext ? Ui.AccentDeep : Ui.CardBg;
+                    cellName[i].Foreground = isNext ? Ui.Accent : Ui.Secondary;
+                    cellTime[i].Foreground = isNext ? Ui.Label : today.Times[k] <= now ? Ui.Dim : Ui.Label;
                 }
             }
 
             var p = Core.Pomo;
-            var color = p.Phase == "focus" ? Ui.Orange : Ui.GreenBrush;
+            var color = p.Phase == "focus" ? Ui.Accent : Ui.Sky;
             wRing.Stroke = color;
             wRing.Set(p.Progress);
             var f = Core.Todos.Focused;

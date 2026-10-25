@@ -16,7 +16,7 @@ namespace WaktuShalat
         public string City = "Jakarta";
         public double Lat = -6.2088, Lon = 106.8456;
         public int Method = 20;
-        public bool Notify = true, PreRemind = true, Startup = true, Sound = true, Widget = false, AutoSlim = true;
+        public bool Notify = true, PreRemind = true, Startup = true, Sound = true, Widget = false, AutoSlim = true, Iqamah = true;
         public string NotchPos = "center"; // left | center | right
         public double WidgetX = double.NaN, WidgetY = double.NaN;
         public int FocusMin = 25;
@@ -60,6 +60,7 @@ namespace WaktuShalat
                         case "Sound": s.Sound = v == "1"; break;
                         case "Widget": s.Widget = v == "1"; break;
                         case "AutoSlim": s.AutoSlim = v == "1"; break;
+                        case "Iqamah": s.Iqamah = v == "1"; break;
                         case "NotchPos": s.NotchPos = v; break;
                         case "WidgetX": s.WidgetX = double.Parse(v, inv); break;
                         case "WidgetY": s.WidgetY = double.Parse(v, inv); break;
@@ -83,7 +84,7 @@ namespace WaktuShalat
                     "City=" + City, "Lat=" + Lat.ToString(inv), "Lon=" + Lon.ToString(inv),
                     "Method=" + Method.ToString(inv), "Notify=" + b(Notify), "PreRemind=" + b(PreRemind),
                     "Startup=" + b(Startup), "Sound=" + b(Sound), "Widget=" + b(Widget),
-                    "AutoSlim=" + b(AutoSlim), "NotchPos=" + NotchPos,
+                    "AutoSlim=" + b(AutoSlim), "NotchPos=" + NotchPos, "Iqamah=" + b(Iqamah),
                     "WidgetX=" + WidgetX.ToString(inv), "WidgetY=" + WidgetY.ToString(inv),
                     "FocusMin=" + FocusMin.ToString(inv), "PomoDate=" + PomoDate, "PomoDone=" + PomoDone.ToString(inv) });
             }

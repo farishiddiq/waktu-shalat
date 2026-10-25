@@ -416,7 +416,7 @@ namespace WaktuShalat
         {
             var g = new Grid { Width = 214, Height = CompactH, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Top, RenderTransformOrigin = new Point(0.5, 0.5) };
             var left = new StackPanel { Orientation = Orientation.Horizontal, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(19, 0, 0, 0) };
-            var moon = Ui.Icon("", 12, Ui.Label);
+            var moon = Ui.Icon("", 12, Ui.Accent);
             moon.Margin = new Thickness(0, 1, 9, 0);
             left.Children.Add(moon);
             cpName = Ui.T("Shalat", 13, Ui.Label, FontWeights.SemiBold);
@@ -437,7 +437,7 @@ namespace WaktuShalat
             g.ColumnDefinitions.Add(new ColumnDefinition());
             g.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
             var left = new StackPanel { Orientation = Orientation.Horizontal, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(14, 0, 0, 0) };
-            cmRing = new Ring(16, 3, Ui.Raised, Ui.Orange);
+            cmRing = new Ring(16, 3, Ui.Raised, Ui.Accent);
             cmRing.Margin = new Thickness(0, 0, 9, 0);
             left.Children.Add(cmRing);
             cmLabel = Ui.T("Fokus", 13, Ui.Label, FontWeights.SemiBold);
@@ -449,7 +449,7 @@ namespace WaktuShalat
             cmTask.Margin = new Thickness(12, 0, 10, 0);
             Grid.SetColumn(cmTask, 1);
             g.Children.Add(cmTask);
-            cmTime = Ui.T("25:00", 13, Ui.Orange, FontWeights.SemiBold);
+            cmTime = Ui.T("25:00", 13, Ui.Accent, FontWeights.SemiBold);
             cmTime.VerticalAlignment = VerticalAlignment.Center;
             cmTime.Margin = new Thickness(0, 0, 19, 0);
             Grid.SetColumn(cmTime, 2);
@@ -462,7 +462,7 @@ namespace WaktuShalat
             var g = new Grid { Width = 378, Height = 78, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Top, RenderTransformOrigin = new Point(0.5, 0.5) };
             aGlyph = Ui.Icon("", 20, Brushes.Black);
             aGlyph.HorizontalAlignment = HorizontalAlignment.Center;
-            aIconBg = new Border { Width = 46, Height = 46, CornerRadius = new CornerRadius(23), Background = Brushes.White, HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(14, 0, 0, 0), Child = aGlyph };
+            aIconBg = new Border { Width = 46, Height = 46, CornerRadius = new CornerRadius(23), Background = Ui.Accent, HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(14, 0, 0, 0), Child = aGlyph };
             g.Children.Add(aIconBg);
             var sp = new StackPanel { VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(74, 0, 18, 0) };
             aTitle = Ui.T("", 15, Ui.Label, FontWeights.SemiBold);
@@ -518,6 +518,12 @@ namespace WaktuShalat
         Grid BuildShalat()
         {
             var g = new Grid { VerticalAlignment = VerticalAlignment.Top };
+            var star = Ui.Star8(190, Ui.Accent, 1.2);
+            star.Opacity = 0.09;
+            star.HorizontalAlignment = HorizontalAlignment.Right;
+            star.VerticalAlignment = VerticalAlignment.Top;
+            star.Margin = new Thickness(0, 18, -56, 0);
+            g.Children.Add(star);
             var sp = new StackPanel { Margin = new Thickness(24, 4, 24, 0) };
             g.Children.Add(sp);
 
@@ -530,7 +536,8 @@ namespace WaktuShalat
             loc.Children.Add(sLoc);
             Ui.Clickable(loc, () => Push(BuildCityPicker()), null);
             top.Children.Add(loc);
-            sHijri = Ui.T("", 12, Ui.Tertiary, FontWeights.Normal);
+            sHijri = Ui.T("", 12, Ui.Accent, FontWeights.Normal);
+            sHijri.Opacity = 0.8;
             sHijri.HorizontalAlignment = HorizontalAlignment.Right;
             sHijri.VerticalAlignment = VerticalAlignment.Center;
             top.Children.Add(sHijri);
@@ -552,7 +559,7 @@ namespace WaktuShalat
 
             sTrack = new Grid { Height = 4, Margin = new Thickness(0, 12, 0, 0) };
             sTrack.Children.Add(new Border { Background = Ui.CardBg, CornerRadius = new CornerRadius(2) });
-            sFill = new Border { Background = Ui.Label, CornerRadius = new CornerRadius(2), HorizontalAlignment = HorizontalAlignment.Left, Width = 0 };
+            sFill = new Border { Background = Ui.Accent, CornerRadius = new CornerRadius(2), HorizontalAlignment = HorizontalAlignment.Left, Width = 0 };
             sTrack.Children.Add(sFill);
             sp.Children.Add(sTrack);
 
@@ -587,7 +594,7 @@ namespace WaktuShalat
             g.Children.Add(sp);
 
             var ringHost = new Grid { Width = 158, Height = 158 };
-            fRing = new Ring(158, 9, Ui.CardBg, Ui.Orange);
+            fRing = new Ring(158, 9, Ui.CardBg, Ui.Accent);
             ringHost.Children.Add(fRing);
             var center = new StackPanel { VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
             fTime = Ui.T("25:00", 40, Ui.Label, FontWeights.Light);
@@ -614,7 +621,7 @@ namespace WaktuShalat
             reset.VerticalAlignment = VerticalAlignment.Center;
             reset.Margin = new Thickness(0, 0, 24, 0);
             controls.Children.Add(reset);
-            controls.Children.Add(Ui.CircleButton(62, Brushes.White, "", 22, Brushes.Black, () => { Core.Pomo.Toggle(); Refresh(); }, out fPlayGlyph));
+            controls.Children.Add(Ui.CircleButton(62, Ui.Accent, "", 22, Brushes.Black, () => { Core.Pomo.Toggle(); Refresh(); }, out fPlayGlyph));
             var skip = Ui.CircleButton(46, Ui.CardBg, "", 16, Ui.Label, () => { Core.Pomo.Skip(); Refresh(); }, out dummy);
             skip.VerticalAlignment = VerticalAlignment.Center;
             skip.Margin = new Thickness(24, 0, 0, 0);
@@ -666,7 +673,7 @@ namespace WaktuShalat
             tInput = new TextBox
             {
                 Background = Brushes.Transparent, Foreground = Ui.Label, CaretBrush = Ui.Label, BorderThickness = new Thickness(0),
-                FontSize = 15, FontFamily = Ui.Text, SelectionBrush = Ui.Blue, VerticalContentAlignment = VerticalAlignment.Center,
+                FontSize = 15, FontFamily = Ui.Text, SelectionBrush = Ui.Accent, VerticalContentAlignment = VerticalAlignment.Center,
                 Margin = new Thickness(38, 0, 12, 0), Padding = new Thickness(0)
             };
             tInput.TextChanged += (s, e) => tPlaceholder.Visibility = tInput.Text.Length == 0 ? Visibility.Visible : Visibility.Collapsed;
@@ -683,7 +690,7 @@ namespace WaktuShalat
             var meta = new Grid { Margin = new Thickness(4, 18, 4, 10) };
             tSummary = Ui.T("", 12, Ui.Secondary, FontWeights.Normal);
             meta.Children.Add(tSummary);
-            tClear = Ui.T("Bersihkan yang selesai", 12, Ui.Blue, FontWeights.Normal);
+            tClear = Ui.T("Bersihkan yang selesai", 12, Ui.Accent, FontWeights.Normal);
             tClear.HorizontalAlignment = HorizontalAlignment.Right;
             Ui.Clickable(tClear, () => Core.Todos.ClearDone(), null);
             meta.Children.Add(tClear);
@@ -728,7 +735,7 @@ namespace WaktuShalat
             row.Child = g;
 
             var check = new Grid { Width = 22, Height = 22, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, Background = Brushes.Transparent, RenderTransformOrigin = new Point(0.5, 0.5), RenderTransform = new ScaleTransform(1, 1) };
-            var circle = new Ellipse { Stroke = item.Done ? Ui.GreenBrush : Ui.Dim, StrokeThickness = 1.6, Fill = item.Done ? Ui.GreenBrush : Brushes.Transparent };
+            var circle = new Ellipse { Stroke = item.Done ? Ui.Accent : Ui.Dim, StrokeThickness = 1.6, Fill = item.Done ? Ui.Accent : Brushes.Transparent };
             var tick = Ui.Icon("", 11, Brushes.Black);
             tick.HorizontalAlignment = HorizontalAlignment.Center;
             tick.Opacity = item.Done ? 1 : 0;
@@ -738,8 +745,8 @@ namespace WaktuShalat
             {
                 // Fill first, then let the list re-sort a beat later so the tick registers.
                 bool nowDone = !item.Done;
-                circle.Fill = nowDone ? Ui.GreenBrush : Brushes.Transparent;
-                circle.Stroke = nowDone ? Ui.GreenBrush : Ui.Dim;
+                circle.Fill = nowDone ? Ui.Accent : Brushes.Transparent;
+                circle.Stroke = nowDone ? Ui.Accent : Ui.Dim;
                 tick.Opacity = nowDone ? 1 : 0;
                 var st = (ScaleTransform)check.RenderTransform;
                 var pop = new DoubleAnimation(1.35, 1, Ui.Ms(380)) { EasingFunction = new BackEase { Amplitude = 0.6, EasingMode = EasingMode.EaseOut } };
@@ -755,7 +762,7 @@ namespace WaktuShalat
             var text = new StackPanel { Orientation = Orientation.Horizontal, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(2, 14, 10, 14) };
             if (item.Focus)
             {
-                var flag = Ui.Icon("", 12, Ui.Orange);
+                var flag = Ui.Icon("", 12, Ui.Accent);
                 flag.Margin = new Thickness(0, 1, 9, 0);
                 text.Children.Add(flag);
             }
@@ -771,7 +778,7 @@ namespace WaktuShalat
             TextBlock dummy;
             if (!item.Done)
             {
-                var focus = Ui.CircleButton(28, Ui.Raised, item.Focus ? "" : "", 11, item.Focus ? Ui.Label : Ui.Orange, () =>
+                var focus = Ui.CircleButton(28, Ui.Raised, item.Focus ? "" : "", 11, item.Focus ? Ui.Label : Ui.Accent, () =>
                 {
                     Core.Todos.SetFocus(item, !item.Focus);
                     if (item.Focus) { Core.Pomo.Phase = "focus"; Core.Pomo.Reset(); Core.Pomo.Start(); SelectTab(1, true); }
@@ -828,10 +835,10 @@ namespace WaktuShalat
             g.RowDefinitions.Add(new RowDefinition { Height = new GridLength(height - 56) });
 
             var back = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(20, 4, 0, 0) };
-            var chev = Ui.Icon("", 13, Ui.Blue);
+            var chev = Ui.Icon("", 13, Ui.Accent);
             chev.Margin = new Thickness(0, 1, 5, 0);
             back.Children.Add(chev);
-            back.Children.Add(Ui.T(backLabel, 15, Ui.Blue, FontWeights.Normal));
+            back.Children.Add(Ui.T(backLabel, 15, Ui.Accent, FontWeights.Normal));
             Ui.Clickable(back, Pop, null);
             g.Children.Add(back);
 
@@ -882,6 +889,8 @@ namespace WaktuShalat
             c3.Children.Add(Row("Saat masuk waktu shalat", Ui.Switch(S.Notify, v => { S.Notify = v; S.Save(); }), null));
             c3.Children.Add(Ui.Sep());
             c3.Children.Add(Row("Pengingat 10 menit sebelum", Ui.Switch(S.PreRemind, v => { S.PreRemind = v; S.Save(); }), null));
+            c3.Children.Add(Ui.Sep());
+            c3.Children.Add(Row("Iqamah (15 mnt, Maghrib 10)", Ui.Switch(S.Iqamah, v => { S.Iqamah = v; S.Save(); }), null));
             c3.Children.Add(Ui.Sep());
             c3.Children.Add(Row("Suara lembut", Ui.Switch(S.Sound, v => { S.Sound = v; S.Save(); if (v) Chime.Play(); }), null));
             sp.Children.Add(Ui.Card(c3));
@@ -942,7 +951,7 @@ namespace WaktuShalat
             for (int i = 0; i < items.Count; i++)
             {
                 if (i > 0) col.Children.Add(Ui.Sep());
-                TextBlock check = i == selected ? Ui.Icon("", 14, Ui.Blue) : null;
+                TextBlock check = i == selected ? Ui.Icon("", 14, Ui.Accent) : null;
                 int idx = i;
                 col.Children.Add(Row(items[i], check, () => { onSelect(idx); Pop(); }));
             }
@@ -995,10 +1004,17 @@ namespace WaktuShalat
             var now = DateTime.Now;
             var n = Core.Next(now);
             var p = Core.Pomo;
-            var pomoColor = p.Phase == "focus" ? Ui.Orange : Ui.GreenBrush;
+            var pomoColor = p.Phase == "focus" ? Ui.Accent : Ui.Sky;
             var focused = Core.Todos.Focused;
+            var iq = Core.Iqamah(now); // between adhan and iqamah the notch counts down to iqamah instead
 
-            if (n != null)
+            if (iq != null)
+            {
+                cpName.Text = "Iqamah " + Api.Name(iq.Key);
+                cpTime.Text = Core.Short(iq.Left);
+                cpTime.Foreground = Ui.Accent;
+            }
+            else if (n != null)
             {
                 cpName.Text = Api.Name(n.Key);
                 cpTime.Text = Core.Short(n.Left);
@@ -1020,19 +1036,22 @@ namespace WaktuShalat
             sHijri.Text = today != null && today.Date == DateTime.Today ? today.Hijri : "";
             if (n != null)
             {
-                sLabel.Text = "MENUJU " + Api.Name(n.Key).ToUpper() + (n.Tomorrow ? " BESOK" : "");
-                sCountdown.Text = Core.Hms(n.Left);
-                sAt.Text = "pukul " + n.At.ToString("HH:mm");
-                sFill.Width = sTrack.ActualWidth * n.Progress;
+                var target = iq ?? n;
+                sLabel.Text = iq != null ? "MENUJU IQAMAH " + Api.Name(iq.Key).ToUpper() : "MENUJU " + Api.Name(n.Key).ToUpper() + (n.Tomorrow ? " BESOK" : "");
+                sLabel.Foreground = iq != null ? Ui.Accent : Ui.Secondary;
+                sCountdown.Text = Core.Hms(target.Left);
+                sAt.Text = "pukul " + target.At.ToString("HH:mm");
+                sFill.Width = sTrack.ActualWidth * target.Progress;
+                string highlight = iq != null ? iq.Key : n.Tomorrow ? null : n.Key;
                 for (int i = 0; i < 5; i++)
                 {
                     var k = Api.Prayers[i];
-                    bool isNext = !n.Tomorrow && k == n.Key;
+                    bool isNext = k == highlight;
                     bool past = today.Times[k] <= now;
                     sCellTime[i].Text = today.Times[k].ToString("HH:mm");
-                    sCells[i].Background = isNext ? Brushes.White : Ui.CardBg;
-                    sCellName[i].Foreground = isNext ? Brushes.Black : Ui.Secondary;
-                    sCellTime[i].Foreground = isNext ? Brushes.Black : past ? Ui.Dim : Ui.Label;
+                    sCells[i].Background = isNext ? Ui.AccentDeep : Ui.CardBg;
+                    sCellName[i].Foreground = isNext ? Ui.Accent : Ui.Secondary;
+                    sCellTime[i].Foreground = isNext ? Ui.Label : past ? Ui.Dim : Ui.Label;
                 }
                 sExtra.Text = "Imsak " + today.Times["Imsak"].ToString("HH:mm") + "   ·   Terbit " + today.Times["Sunrise"].ToString("HH:mm");
             }
@@ -1056,11 +1075,11 @@ namespace WaktuShalat
             foreach (var c in fChips)
             {
                 bool sel = c.Item1 == Core.S.FocusMin;
-                c.Item2.Background = sel ? Brushes.White : Ui.CardBg;
+                c.Item2.Background = sel ? Ui.Accent : Ui.CardBg;
                 c.Item3.Foreground = sel ? Brushes.Black : Ui.Label;
             }
             int filled = p.Phase == "long" ? 4 : p.Cycle;
-            for (int i = 0; i < 4; i++) fDots[i].Fill = i < filled ? Ui.Orange : Ui.Raised;
+            for (int i = 0; i < 4; i++) fDots[i].Fill = i < filled ? Ui.Accent : Ui.Raised;
             int d = p.DoneToday;
             fSessions.Text = d == 0 ? "Belum ada sesi hari ini" : d + " sesi hari ini";
         }

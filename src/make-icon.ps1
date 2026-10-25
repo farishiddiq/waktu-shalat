@@ -28,7 +28,8 @@ foreach ($s in $sizes) {
     # small star
     if ($s -ge 32) {
         $sr = $s * 0.045; $sx = $s * 0.70; $sy = $s * 0.36
-        $g.FillEllipse([System.Drawing.Brushes]::White, [single]($sx - $sr), [single]($sy - $sr), [single]($sr * 2), [single]($sr * 2))
+        $emerald = New-Object System.Drawing.SolidBrush ([System.Drawing.Color]::FromArgb(255, 52, 211, 153))
+        $g.FillEllipse($emerald, [single]($sx - $sr), [single]($sy - $sr), [single]($sr * 2), [single]($sr * 2))
     }
     $g.Dispose()
     $ms = New-Object System.IO.MemoryStream

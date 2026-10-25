@@ -34,9 +34,13 @@ namespace WaktuShalat
         public static readonly Brush Separator = B("#2C2C2E");
         public static readonly Brush Blue = B("#0A84FF");
         public static readonly Brush Orange = B("#FF9F0A");
-        public static readonly Brush GreenBrush = B("#30D158");
+        // Emerald accent: the one colour in the black theme.
+        public static readonly Brush Accent = B("#34D399");
+        public static readonly Brush AccentDeep = B("#0F3A2B");
+        public static readonly Brush Sky = B("#64D2FF");
+        public static readonly Brush GreenBrush = Accent;
         public static readonly Brush Raised = B("#3A3A3C");
-        public static readonly Color Green = Color.FromRgb(0x30, 0xD1, 0x58);
+        public static readonly Color Green = Color.FromRgb(0x34, 0xD3, 0x99);
         public static readonly Color SwitchOff = Color.FromRgb(0x39, 0x39, 0x3D);
 
         static readonly string FontsDir = ExtractFonts();
@@ -155,6 +159,19 @@ namespace WaktuShalat
             el.BeginAnimation(UIElement.OpacityProperty, null);
             el.Opacity = 0;
             el.IsHitTestVisible = false;
+        }
+
+        // Rub el Hizb: two overlapping squares merged into an 8-point star, with a small ring inside.
+        public static Path Star8(double size, Brush stroke, double thickness)
+        {
+            double c = size / 2, side = size / Math.Sqrt(2);
+            var a = new RectangleGeometry(new Rect(c - side / 2, c - side / 2, side, side));
+            var b = new RectangleGeometry(new Rect(c - side / 2, c - side / 2, side, side)) { Transform = new RotateTransform(45, c, c) };
+            var g = new GeometryGroup();
+            g.Children.Add(new CombinedGeometry(GeometryCombineMode.Union, a, b));
+            g.Children.Add(new EllipseGeometry(new Point(c, c), side * 0.3, side * 0.3));
+            g.Freeze();
+            return new Path { Data = g, Stroke = stroke, StrokeThickness = thickness, Width = size, Height = size, IsHitTestVisible = false };
         }
 
         public static Border Sep()

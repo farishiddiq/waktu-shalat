@@ -18,6 +18,7 @@ Jadwal shalat, Pomodoro, dan to-do — langsung di **notch** Windows. Hitam peka
 
 - **Jadwal shalat** dari [Aladhan API](https://aladhan.com/prayer-times-api), metode Kemenag RI (bisa diganti), 34 kota Indonesia + Makkah, Madinah, KL, Singapura. Tetap tampil saat offline.
 - **Notifikasi** saat masuk waktu dan 10 menit sebelumnya, dengan chime lembut.
+- **Iqamah** — setelah azan, notch menghitung mundur ke iqamah (15 menit, Maghrib 10 menit) dan mengingatkan saat waktunya tiba.
 - **Menyingkir sendiri** — jadi garis tipis saat ada jendela maximize (tab Chrome tetap bisa diklik), hilang saat aplikasi fullscreen. Posisi bisa kiri, tengah, atau kanan.
 
 ![Fokus](docs/screenshots/fokus.png)
